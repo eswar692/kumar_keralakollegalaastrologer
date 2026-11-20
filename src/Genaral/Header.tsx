@@ -13,13 +13,13 @@ const NAV_LINKS = [
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-40 w-full shadow-md">
+    <header className="sticky top-0 z-40 w-full shadow-lg border-b border-amber-500/25">
       {/* Top Announcement / Quick-Call Bar */}
       <TopBar />
 
       {/* Main Brand & Navigation Bar */}
-      <div className="bg-gradient-to-r from-amber-50/95 via-orange-50/95 to-amber-100/95 backdrop-blur-md border-b border-amber-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5 flex items-center justify-between gap-4">
+      <div className="bg-gradient-to-r from-amber-50/95 via-orange-50/90 to-amber-100/95 backdrop-blur-md border-b border-amber-300/60">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 sm:py-3.5 flex items-center justify-between gap-4">
           <BrandIdentity />
           <Navigation />
         </div>
