@@ -3,6 +3,7 @@ import { useState } from "react";
 import Marquee from "react-fast-marquee";
 import { Link, useLocation } from "react-router-dom";
 import { business_name, phone_number } from "./Secret";
+import { createPortal } from "react-dom";
 
 const NAV_LINKS = [
   { label: "Home", path: "/" },
@@ -13,7 +14,7 @@ const NAV_LINKS = [
 
 const Header = () => {
   return (
-    <header className="sticky top-0 z-40 w-full shadow-lg border-b border-amber-500/25">
+    <header className=" top-0 z-40 w-full shadow-lg border-b border-amber-500/25">
       {/* Top Announcement / Quick-Call Bar */}
       <TopBar />
 
@@ -148,80 +149,86 @@ const MobileMenu = ({
   setOpen,
   currentPath,
 }: {
-  setOpen: (open: boolean) => void;
+  setOpen: (open: boolean) => void;   
   currentPath: string;
-}) => (
-  <div className="fixed inset-0 z-50 lg:hidden flex justify-end">
-    {/* Backdrop */}
-    <div
-      className="fixed inset-0 bg-stone-950/60 backdrop-blur-xs transition-opacity"
-      onClick={() => setOpen(false)}
-    />
+}) => {
+  if (typeof document === "undefined") return null;
 
-    {/* Slide-over Panel */}
-    <div className="relative w-4/5 max-w-sm h-full bg-gradient-to-b from-amber-50 to-white p-6 flex flex-col justify-between shadow-2xl border-l border-amber-200">
-      <div>
-        {/* Drawer Header */}
-        <div className="flex justify-between items-center pb-5 border-b border-amber-200/80">
-          <div>
-            <h2 className="montserrat text-xl font-bold text-stone-900">
-              {business_name}
-            </h2>
-            <span className="text-xs font-medium text-amber-700">
-              Trusted Since 1970
-            </span>
+  return createPortal(
+    <div className="fixed inset-0 z-[9999] lg:hidden flex justify-end">
+      {/* Backdrop */}
+      <div
+        className="fixed inset-0 bg-stone-950/60 backdrop-blur-xs transition-opacity"
+        onClick={() => setOpen(false)}
+      />
+
+      {/* Slide-over Panel */}
+      <div className="relative z-10 w-4/5 max-w-sm h-full bg-gradient-to-b from-amber-50 via-white to-amber-50/80 p-6 flex flex-col justify-between shadow-2xl border-l border-amber-200 overflow-y-auto">
+        <div>
+          {/* Drawer Header */}
+          <div className="flex justify-between items-center pb-5 border-b border-amber-200/80">
+            <div>
+              <h2 className="montserrat text-xl font-bold text-stone-900">
+                {business_name}
+              </h2>
+              <span className="text-xs font-medium text-amber-700">
+                Trusted Since 1970
+              </span>
+            </div>
+            <button
+              type="button"
+              aria-label="Close Navigation Menu"
+              onClick={() => setOpen(false)}
+              className="p-2 bg-stone-900 text-amber-400 rounded-full shadow-md hover:scale-105 transition-transform"
+            >
+              <X className="w-5 h-5" />
+            </button>
           </div>
-          <button
-            aria-label="Close Navigation Menu"
-            onClick={() => setOpen(false)}
-            className="p-2 bg-stone-900 text-amber-400 rounded-full shadow-md hover:scale-105 transition-transform"
-          >
-            <X className="w-5 h-5" />
-          </button>
+
+          {/* Drawer Links */}
+          <ul className="flex flex-col gap-2 mt-6 font-semibold montserrat text-base">
+            {NAV_LINKS.map(({ label, path }) => {
+              const isActive = currentPath === path;
+              return (
+                <li key={path}>
+                  <Link
+                    to={path}
+                    onClick={() => setOpen(false)}
+                    className={`block px-4 py-3 rounded-xl transition-colors ${
+                      isActive
+                        ? "bg-amber-500/20 text-amber-900 font-bold border border-amber-400/40"
+                        : "text-stone-700 hover:bg-amber-100/60 hover:text-stone-900"
+                    }`}
+                  >
+                    {label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
         </div>
 
-        {/* Drawer Links */}
-        <ul className="flex flex-col gap-2 mt-6 font-semibold montserrat text-base">
-          {NAV_LINKS.map(({ label, path }) => {
-            const isActive = currentPath === path;
-            return (
-              <li key={path}>
-                <Link
-                  to={path}
-                  onClick={() => setOpen(false)}
-                  className={`block px-4 py-3 rounded-xl transition-colors ${
-                    isActive
-                      ? "bg-amber-500/20 text-amber-900 font-bold border border-amber-400/40"
-                      : "text-stone-700 hover:bg-amber-100/60 hover:text-stone-900"
-                  }`}
-                >
-                  {label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
+        {/* Drawer Footer CTA */}
+        <div className="pt-6 border-t border-amber-200/80 flex flex-col gap-4">
+          <p className="open-sans text-stone-600 text-xs leading-relaxed">
+            <strong className="text-stone-900">{business_name}</strong> —
+            Horoscope readings, matchmaking, career predictions, and personalized
+            spiritual remedies to guide you with confidence.
+          </p>
 
-      {/* Drawer Footer CTA */}
-      <div className="pt-6 border-t border-amber-200/80 flex flex-col gap-4">
-        <p className="open-sans text-stone-600 text-xs leading-relaxed">
-          <strong className="text-stone-900">{business_name}</strong> —
-          Horoscope readings, matchmaking, career predictions, and personalized
-          spiritual remedies to guide you with confidence.
-        </p>
-
-        <a
-          href={`tel:+91${phone_number}`}
-          className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold montserrat text-sm shadow-lg flex items-center justify-center gap-2"
-        >
-          <PhoneCall className="w-4 h-4" />
-          <span>Call Now: +91 {phone_number}</span>
-        </a>
+          <a
+            href={`tel:+91${phone_number}`}
+            className="w-full py-3 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-orange-600 text-white font-bold montserrat text-sm shadow-lg flex items-center justify-center gap-2"
+          >
+            <PhoneCall className="w-4 h-4" />
+            <span>Call Now: +91 {phone_number}</span>
+          </a>
+        </div>
       </div>
-    </div>
-  </div>
-);
+    </div>,
+    document.body
+  );
+};
 
 const TextMarquee = () => (
   <div className="bg-stone-950 border-t border-amber-500/30 py-2">
