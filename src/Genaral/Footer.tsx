@@ -1,143 +1,195 @@
 import { motion } from "framer-motion";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, MessageCircle, Phone, Sparkles } from "lucide-react";
 import useInViewOnce from "./InView";
+import { business_name, person_name, phone_number } from "./Secret";
+
+const SERVICES = [
+  "Love Expert",
+  "Astrology Specialist",
+  "Love Problem Expert",
+  "Love Marriage Approval",
+  "Quick Rishta Marriage",
+];
+
+const WHY_CHOOSE = [
+  "Relationship Problem",
+  "Husband-Wife Dispute Specialist",
+  "Happy Clients",
+  "Online Astrologer",
+  "Visa Problems",
+];
 
 export default function Footer() {
   const [ref, inView] = useInViewOnce(0.2);
 
-  const services = [
-    "Love Expert",
-    "Astrology Specialist",
-    "Love Problem Expert",
-    "Love Marriage Approval",
-    "Quick Rishta Marriage",
-  ];
-
-  const whyChoose = [
-    "Relationship Problem",
-    "Husband-Wife Dispute Specialist",
-    "Happy Clients",
-    "Online Astrologer",
-    "Visa Problems",
-  ];
+  const brandName = business_name || "Astrology Center";
+  const astrologer = person_name || "Astrologer";
+  const cleanPhone = (phone_number || "916302133653").replace(/^91/, "");
+  const telHref = `tel:+91${cleanPhone}`;
+  const waHref = `https://wa.me/91${cleanPhone}`;
 
   return (
-    <motion.footer className="relative text-white  py-12 ">
+    <footer className="relative text-white bg-stone-950 border-t border-amber-500/30 overflow-hidden">
       {/* Background Image */}
       <div
-        className="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-90"
+        aria-hidden="true"
+        className="absolute inset-0 bg-center bg-no-repeat bg-cover opacity-35"
         style={{
           backgroundImage:
-            "url('https://i.pinimg.com/736x/bf/e8/53/bfe85357e954b496d9797add664907d6.jpg')",
+            "url('https://i.pinimg.com/736x/60/53/c4/6053c4eeaafe3d00deca910b44aca06b.jpg')",
         }}
-      ></div>
+      />
 
-      {/* Overlay */}
-      <div className="absolute inset-0 bg-black/75"></div>
+      {/* Rich Dark & Amber Scrim Overlay */}
+      <div
+        aria-hidden="true"
+        className="absolute inset-0 bg-gradient-to-b from-stone-950/90 via-stone-950/85 to-stone-950"
+      />
 
-      {/* Content */}
+      {/* Main Footer Content */}
       <motion.div
         ref={ref}
-        initial={{ scale: 0.9, opacity: 0 }}
-        animate={inView ? { scale: 1, opacity: 1 } : { scale: 0.9, opacity: 0 }}
-        transition={{ duration: 0.8 }}
-        className="mb-[200px] w-full relative grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto z-10 "
+        initial={{ y: 20, opacity: 0 }}
+        animate={inView ? { y: 0, opacity: 1 } : { y: 20, opacity: 0 }}
+        transition={{ duration: 0.65 }}
+        className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-14 pb-12"
       >
-        <div className="px-6">
-          {/* About */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Column 1: About */}
           <div>
-            <h2 className="font-bold text-xl mb-3 montserrat">
-              About Chamundeswari Astrology Center
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-500/15 border border-amber-400/30 text-amber-300 text-[11px] font-bold uppercase tracking-wider montserrat mb-3">
+              <Sparkles className="w-3 h-3 text-amber-400" />
+              <span>Trusted Guidance</span>
+            </div>
+
+            <h2 className="font-bold text-xl text-white mb-3 montserrat">
+              About {brandName}
             </h2>
-            <p className="text-sm open-sans leading-relaxed">
-              <b>Chamundeswari Astrology Center</b> is ranked as one of South
-              India's Top 5 Astrologers. Using exceptional astrological skills,
-              Dr. Sri Sanjeev Swamy helps clients understand themselves, their
-              goals, aspirations, constraints, and potential.
+
+            <p className="text-sm text-stone-300 open-sans leading-relaxed">
+              <strong className="text-amber-300 font-semibold">
+                {brandName}
+              </strong>{" "}
+              is recognized among South India&apos;s trusted astrological
+              practices. Using classical astrological insight,{" "}
+              <strong className="text-white font-semibold">{astrologer}</strong>{" "}
+              helps clients understand their goals, aspirations, challenges, and
+              true potential.
             </p>
           </div>
 
-          {/* Contact */}
-          <div className="px-3">
-            <h2 className="font-bold text-xl mb-3 montserrat">Contact Us</h2>
-            <p className="open-sans">📞 91 63021 33653</p>
-            <p className="open-sans">💬 +91 63021 33653</p>
-            <p className="mt-2 font-bold text-yellow-500 montserrat">
-              Best Astro Guidance
-            </p>
-            <p className="text-sm open-sans">
-              AUTHENTIC | RELIABLE | GENUINE | SUPPORTIVE
-            </p>
-          </div>
-
-          {/* Services */}
+          {/* Column 2: Contact */}
           <div>
-            <h2 className="font-bold text-xl mb-3 montserrat">Our Services</h2>
-            <ul className="text-sm space-y-2 open-sans">
-              {services.map((service, idx) => (
-                <li key={idx} className="flex items-center gap-2">
-                  <ChevronRight className="w-4 h-4 text-yellow-500 flex-shrink-0" />
-                  <span>{service}</span>
+            <h2 className="font-bold text-xl text-white mb-3 montserrat">
+              Contact Us
+            </h2>
+
+            <div className="space-y-2.5 text-sm text-stone-300 open-sans">
+              <a
+                href={telHref}
+                className="flex items-center gap-2.5 hover:text-amber-300 transition-colors"
+              >
+                <Phone className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>+91 {cleanPhone}</span>
+              </a>
+
+              <a
+                href={waHref}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2.5 hover:text-amber-300 transition-colors"
+              >
+                <MessageCircle className="w-4 h-4 text-amber-400 shrink-0" />
+                <span>WhatsApp: +91 {cleanPhone}</span>
+              </a>
+            </div>
+
+            <div className="mt-5 pt-4 border-t border-stone-800">
+              <p className="font-bold text-sm text-amber-400 montserrat">
+                Best Astro Guidance
+              </p>
+              <p className="text-xs text-stone-400 montserrat tracking-wider mt-1">
+                AUTHENTIC • RELIABLE • GENUINE • SUPPORTIVE
+              </p>
+            </div>
+          </div>
+
+          {/* Column 3: Services */}
+          <div>
+            <h2 className="font-bold text-xl text-white mb-3 montserrat">
+              Our Services
+            </h2>
+
+            <ul className="text-sm text-stone-300 space-y-2.5 open-sans">
+              {SERVICES.map((service) => (
+                <li key={service} className="flex items-center gap-2">
+                  <ChevronRight className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span className="hover:text-amber-200 transition-colors">
+                    {service}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
 
-          {/* Why Choose */}
+          {/* Column 4: Why Choose Us */}
           <div>
-            <h2 className="font-bold text-xl mb-3 montserrat">
+            <h2 className="font-bold text-xl text-white mb-3 montserrat">
               Why Choose Us?
             </h2>
-            <ul className="text-sm space-y-2 open-sans">
-              {whyChoose.map((item, idx) => (
-                <li key={idx} className="flex items-center gap-2">
-                  <ChevronRight className="w-4 h-4 text-yellow-500 flex-shrink-0" />
-                  <span>{item}</span>
+
+            <ul className="text-sm text-stone-300 space-y-2.5 open-sans">
+              {WHY_CHOOSE.map((item) => (
+                <li key={item} className="flex items-center gap-2">
+                  <ChevronRight className="w-4 h-4 text-amber-400 shrink-0" />
+                  <span className="hover:text-amber-200 transition-colors">
+                    {item}
+                  </span>
                 </li>
               ))}
             </ul>
           </div>
         </div>
       </motion.div>
-      {/* copy right and my contact */}
+
+      {/* Bottom Copyright & Agency Bar */}
       <CopyRightAndContact />
-    </motion.footer>
+    </footer>
   );
 }
 
 const CopyRightAndContact = () => {
   return (
-    <div className="h-[200px] md:h-[80px] z-30 bg-gradient-to-r from-red-700 to-orange-600 text-white py-4 absolute bottom-0 left-0 right-0">
-      <div className="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-        {/* Left Column */}
-        <div className="mb-4 md:mb-0 text-center md:text-left flex gap-2">
-          <p className="font-montserrat text-sm montserrat font-semibold mt-2">
+    <div className="relative z-10 bg-stone-900/95 border-t border-amber-500/25 py-4 px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto flex flex-col md:flex-row justify-between items-center gap-4 text-center md:text-left">
+        {/* Left Column: Agency Credit */}
+        <div className="flex flex-wrap items-center justify-center md:justify-start gap-2.5">
+          <p className="text-xs sm:text-sm text-stone-300 font-semibold montserrat">
             Designed and Developed By Eswar
           </p>
           <a
             href="https://wa.me/918886921826?text=Hello%20Pro%20Daddy%20Agency"
-            className="text-lg font-bold font-roboto hover:underline hover:text-yellow-300 transition"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-amber-500 to-orange-600 hover:from-amber-400 hover:to-orange-500 text-white text-xs font-bold montserrat shadow-sm transition-all duration-200 hover:scale-105"
           >
-            <button className=" text-black bg-white   py-2 px-4 rounded text-sm">
-              Pro Daddy Agency
-            </button>
+            Pro Daddy Agency
           </a>
         </div>
 
-        {/* Right Column */}
-        <div className="text-center md:text-right open-sans">
-          <p className="text-sm font-opensans">
-            © {new Date().getFullYear()}{" "}
-            <a
-              href="https://www.chamundeswariastro.com"
-              target="_blank"
-              className="font-semibold hover:text-yellow-300 transition"
-            >
-              www.chamundeswariastro.com
-            </a>{" "}
-            – All Rights Reserved.
-          </p>
-        </div>
+        {/* Right Column: Copyright */}
+        <p className="text-xs sm:text-sm text-stone-400 open-sans">
+          &copy; {new Date().getFullYear()}{" "}
+          <a
+            href="https://keralakollegalaastrologer.in/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-amber-300 font-semibold hover:text-amber-200 hover:underline transition-colors"
+          >
+            keralakollegalaastrologer.in
+          </a>{" "}
+          &ndash; All Rights Reserved.
+        </p>
       </div>
     </div>
   );

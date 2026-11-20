@@ -1,34 +1,7 @@
-import ImageGrid from "../Genaral/ImageGrid";
+import { person_name } from "../Genaral/Secret";
 
 export default function About() {
-  const slides = [
-    {
-      id: 1,
-      img: "https://ravishankarguruji.com/storage/2025/03/3-2048x1366.jpeg",
-    },
-    { id: 2, img: "https://ravishankarguruji.com/storage/2025/03/2.jpeg" },
-    { id: 3, img: "https://ravishankarguruji.com/storage/2025/03/1.jpeg" },
-    {
-      id: 4,
-      img: "https://kalikadeviastro.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-12-23-at-14.18.17_0b522bc6-1024x768.jpg",
-    },
-    {
-      id: 5,
-      img: "https://kalikadeviastro.com/wp-content/uploads/2024/12/IMG-20241222-WA0003-1152x1536.jpg",
-    },
-    {
-      id: 6,
-      img: "https://kalikadeviastro.com/wp-content/uploads/2024/12/WhatsApp-Image-2024-12-23-at-14.18.52_50457e75-1024x768.jpg",
-    },
-    {
-      id: 7,
-      img: "https://kalikadeviastro.com/wp-content/uploads/2024/12/IMG-20241222-WA0006-1152x1536.jpg",
-    },
-    {
-      id: 8,
-      img: "https://kalikadeviastro.com/wp-content/uploads/2024/12/IMG-20241222-WA0005-1152x1536.jpg",
-    },
-  ];
+ 
 
   return (
     <section className="bg-gradient-to-b from-orange-50 to-yellow-50 py-16 px-6 font-sans">
@@ -41,7 +14,7 @@ export default function About() {
           <p className="text-gray-700 text-lg leading-relaxed space-y-4">
             Astrologer{" "}
             <span className="font-bold text-red-700">
-              Astrologer Sanjev Swamy
+              {person_name}
             </span>{" "}
             is a renowned and respected spiritual leader in India. With his deep
             knowledge of astrology and unwavering commitment to helping others,
@@ -52,7 +25,7 @@ export default function About() {
             Through his extensive experience and intuitive abilities, Astrologer
             <span className="font-semibold text-yellow-700">
               {" "}
-              Sanjev Swamy
+             {person_name}
             </span>{" "}
             offers a wide range of services, including palm readings, face
             readings, photo readings, and phone consultations. His expertise
@@ -63,7 +36,7 @@ export default function About() {
             <br />
             Renowned for his{" "}
             <span className="font-semibold text-red-600">accuracy</span> and
-            insightful interpretations, Astrologer Panikaran Guruji has built a
+            insightful interpretations, {person_name} has built a
             loyal following of clients who attest to the transformative power of
             his readings.
             <br />
@@ -73,27 +46,7 @@ export default function About() {
         </div>
       </div>
 
-      {/* Gallery */}
-      <div className="max-w-6xl mx-auto mt-16">
-        <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-red-600 to-yellow-600 bg-clip-text text-transparent mb-10">
-          Gallery
-        </h2>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {slides.map((slide) => (
-            <div
-              key={slide.id}
-              className="relative group overflow-hidden rounded-xl shadow-lg transition duration-300"
-            >
-              <img
-                src={slide.img}
-                alt={`Slide ${slide.id}`}
-                className="w-full h-full object-cover transform group-hover:scale-110 transition duration-500"
-              />
-            </div>
-          ))}
-        </div>
-        <ImageGrid />
-      </div>
+    
     </section>
   );
 }
